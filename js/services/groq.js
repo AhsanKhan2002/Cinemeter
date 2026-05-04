@@ -26,7 +26,7 @@ Write exactly 3 sharp, opinionated sentences analyzing why this movie's ratings 
         'Authorization': `Bearer ${CONFIG.GROQ_KEY}`
       },
       body: JSON.stringify({
-        model: 'llama3-8b-8192',
+        model: 'llama-3.1-8b-instant',
         max_tokens: 200,
         messages: [{ role: 'user', content: prompt }]
       })
