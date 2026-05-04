@@ -1,0 +1,39 @@
+name: Deploy CineMeter to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Inject API keys into config.js
+        run: |
+          cat > js/config.js << 'EOF'
+          const CONFIG = {
+            TMDB_KEY: '${{ secrets.TMDB_KEY }}',
+            TMDB_BASE: 'https://api.themoviedb.org/3',
+            TMDB_IMAGE_BASE: 'https://image.tmdb.org/t/p/w500',
+            TMDB_BACKDROP_BASE: 'https://image.tmdb.org/t/p/w1280',
+            OMDB_KEY: '${{ secrets.OMDB_KEY }}',
+            OMDB_BASE: 'https://www.omdbapi.com',
+            GROQ_KEY: '${{ secrets.GROQ_KEY }}',
+            GROQ_BASE: 'https://api.groq.com/openai/v1'
+          };
+          export default CONFIG;
+          EOF
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
