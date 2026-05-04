@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CineMeter — What does the crowd really think?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#/home" class="nav-logo">Cine<span class="grad-text">Meter</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#/home" data-route="home">Home</a></li>
+        <li><a href="#/insights" data-route="insights">Insights</a></li>
+        <li>
+          <a href="#/compare" data-route="compare" id="compare-nav-link">
+            Compare
+            <span class="compare-dot" id="compare-dot"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="app"></div>
+  <div id="banner-container"></div>
+  <div id="toast-container"></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
