@@ -9,16 +9,23 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Inject API keys into config.js
         run: |
-          cat > js/config.js << 'EOF'
+          cat > js/config.js << 'ENDOFFILE'
           const CONFIG = {
             TMDB_KEY: '${{ secrets.TMDB_KEY }}',
             TMDB_BASE: 'https://api.themoviedb.org/3',
@@ -30,10 +37,16 @@ jobs:
             GROQ_BASE: 'https://api.groq.com/openai/v1'
           };
           export default CONFIG;
-          EOF
+          ENDOFFILE
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+        id: deployment
+        uses: actions/deploy-pages@v4
