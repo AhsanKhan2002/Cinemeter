@@ -12,9 +12,10 @@ export function renderScoreWheel(label, value) {
         <svg class="wheel-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
-              <stop offset="50%" style="stop-color:#ec4899;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+              <stop offset="0%" style="stop-color:#00d9ff;stop-opacity:1" />
+              <stop offset="33%" style="stop-color:#8338ec;stop-opacity:1" />
+              <stop offset="66%" style="stop-color:#ff006e;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ffbe0b;stop-opacity:1" />
             </linearGradient>
           </defs>
           <circle class="wheel-circle-bg" cx="100" cy="100" r="100" />
