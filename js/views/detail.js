@@ -7,6 +7,7 @@ import { SkeletonDetail } from '../components/skeleton.js';
 import { showToast } from '../components/toast.js';
 import { AppState, isInWatchlist, toggleWatchlist } from '../state.js';
 import { handleCompareClick } from '../main.js';
+import { renderScoreWheel, animateWheels } from '../components/wheels.js';
 
 export async function renderDetail(id) {
   const app = document.getElementById('app');
@@ -74,14 +75,16 @@ export async function renderDetail(id) {
       <div class="detail-body">
         <div class="section">
           <div class="section-title">Score Analysis</div>
-          <div class="score-bars-block">
-            ${scoreBar('Audience', audienceScore)}
-            ${scoreBar('Critics', criticScore)}
-            ${scoreBar('Controversy', controversyScore)}
+          <div class="score-wheels">
+            ${renderScoreWheel('Audience Score', audienceScore)}
+            ${renderScoreWheel('Critics Score', criticScore)}
+            ${renderScoreWheel('Controversy', controversyScore)}
           </div>
-          <span class="badge badge-large ${badgeCls} ${lowConfidence ? 'badge-low-confidence' : ''}">
-            ${lowConfidence ? '⚠ ' : ''}${label}
-          </span>
+          <div style="text-align:center;">
+            <span class="badge badge-large ${badgeCls} ${lowConfidence ? 'badge-low-confidence' : ''}">
+              ${lowConfidence ? '⚠ ' : ''}${label}
+            </span>
+          </div>
         </div>
 
         <div class="section">
@@ -97,13 +100,8 @@ export async function renderDetail(id) {
         ${cast ? `<div class="section"><div class="section-title">Cast</div><div class="cast-scroll">${cast}</div></div>` : ''}
       </div>`;
 
-    // animate score bars
-    requestAnimationFrame(() => {
-      if (audienceScore) document.querySelector('[data-bar="Audience"]')?.style && (document.querySelector('[data-bar="Audience"]').style.width = audienceScore + '%');
-      document.querySelectorAll('.score-fill-large[data-width]').forEach(el => {
-        el.style.width = el.dataset.width + '%';
-      });
-    });
+    // animate score wheels
+    animateWheels();
 
     // compare button
     document.getElementById('detail-compare')?.addEventListener('click', () => handleCompareClick(String(id)));
@@ -146,15 +144,6 @@ export async function renderDetail(id) {
     app.innerHTML = `<div class="page"><div class="no-results"><h3>Failed to load movie</h3><p>${err.message}</p></div></div>`;
     showToast('Failed to load movie details', 'error');
   }
-}
-
-function scoreBar(label, value) {
-  if (value === null || value === undefined) return '';
-  return `
-    <div class="score-row-large">
-      <div class="score-label-row-large"><span>${label}</span><strong>${value}</strong></div>
-      <div class="score-track-large"><div class="score-fill-large" data-width="${value}"></div></div>
-    </div>`;
 }
 
 function showInsight(text) {
