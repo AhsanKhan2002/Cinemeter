@@ -21,7 +21,9 @@ export function computeScores(omdbData) {
 
   let label = 'Balanced';
   if (controversyScore !== null && controversyScore > 25) {
-    label = audienceScore > criticScore ? 'Overrated' : 'Underrated';
+    // If audience score is HIGHER than critic score = critics underrated it = UNDERRATED
+    // If audience score is LOWER than critic score = critics overrated it = OVERRATED
+    label = audienceScore > criticScore ? 'Underrated' : 'Overrated';
   }
 
   const lowConfidence = votes < 500;
