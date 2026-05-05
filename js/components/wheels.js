@@ -1,15 +1,15 @@
 export function renderScoreWheel(label, value) {
   if (value === null || value === undefined) return '';
   
-  // r=90 so circumference = 2π*90 ≈ 565.49
-  const circumference = 565.49;
+  // r=100 so circumference = 2π*100 ≈ 628.32
+  const circumference = 628.32;
   const offset = circumference * (1 - value / 100);
   
   return `
     <div class="score-wheel">
       <div class="score-wheel-label">${label}</div>
       <div class="wheel-container">
-        <svg class="wheel-svg" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+        <svg class="wheel-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
@@ -17,8 +17,8 @@ export function renderScoreWheel(label, value) {
               <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
             </linearGradient>
           </defs>
-          <circle class="wheel-circle-bg" cx="90" cy="90" r="90" />
-          <circle class="wheel-circle-fill" cx="90" cy="90" r="90" data-offset="${offset}" />
+          <circle class="wheel-circle-bg" cx="100" cy="100" r="100" />
+          <circle class="wheel-circle-fill" cx="100" cy="100" r="100" data-offset="${offset}" />
         </svg>
         <div class="wheel-value">
           <div class="wheel-value-num">${value}</div>
@@ -32,7 +32,7 @@ export function animateWheels() {
   requestAnimationFrame(() => {
     document.querySelectorAll('.wheel-circle-fill[data-offset]').forEach(el => {
       const offset = parseFloat(el.dataset.offset);
-      const circumference = 565.49;
+      const circumference = 628.32;
       el.style.strokeDasharray = `${circumference - offset} ${circumference}`;
     });
   });
