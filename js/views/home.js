@@ -12,7 +12,7 @@ export async function renderHome() {
   app.innerHTML = `
     <div class="page">
       <div class="hero">
-        <h1>What does the crowd<br><span class="grad-text">really think?</span></h1>
+        <h1>What does <span class="grad-word">the crowd really think?</span></h1>
         <p>Discover the gap between critics and audiences.</p>
       </div>
 
